@@ -4,6 +4,8 @@ The main program for the rover swarm simulation
 
 import argparse, sys, os
 from environment import environment
+import time
+import os
 
 if __name__=="__main__":
     # create the argument parser
@@ -30,8 +32,8 @@ if __name__=="__main__":
     simul_env = environment(full_env, pargs.num_rovers, pargs.x_view_dist, pargs.y_view_dist)
     for i in range(0, pargs.time_steps):
         simul_env.time_step()
-    
         curstate = simul_env.get_state()
-        # print current state or write it to output file
+        os.system('clear')
         print curstate
-    
+        time.sleep(1)
+
