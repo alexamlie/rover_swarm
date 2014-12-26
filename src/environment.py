@@ -50,12 +50,36 @@ class environment(object):
                     rov.update_rover(desired_loc, new_env)
                     newloc_set = True # move on to the next rover
 
-    
+    # Simple visual representation     
     def get_state(self):
         state_string = ""
-        for rovnum in range(len(self.rover_list)):
-            thisloc = self.rover_list[rovnum].location
-            state_string += "Rover %d: (%d, %d)\t" % (rovnum, thisloc[0], thisloc[1])
-        # remove the last tab
-        state_string = state_string[0:-1]
+        for i_idx, i_val in enumerate(self.full_environment):
+            for k_idx, k_val in enumerate(i_val):
+
+                # Elevation 
+                if k_val[0] > .5:
+                    state_string += ' E'
+                else:
+                    state_string += ' e'
+
+                # Rover existence 
+                has_rover = False
+                for r in self.rover_list:
+                    if r.location[0] == i_idx and r.location[1] == k_idx:
+                        state_string += '*'
+                        has_rover = True
+                if not has_rover:
+                    state_string += ' '
+                    
+                # Prize 
+                if k_val[1] > .5:
+                    state_string += 'P '
+                else:
+                    state_string += 'p '
+
+            state_string += '\n\n'
+
         return state_string
+
+        
+        
